@@ -5,14 +5,14 @@ canvas.width = canvas.clientWidth;
 canvas.height = canvas.clientHeight;
 
 let config = {
-    SIM_RESOLUTION: 128,
-    DYE_RESOLUTION: 512,
+    SIM_RESOLUTION: 256,
+    DYE_RESOLUTION: 1024,
     DENSITY_DISSIPATION: 0.97,
     VELOCITY_DISSIPATION: 0.98,
     PRESSURE_DISSIPATION: 0.8,
     PRESSURE_ITERATIONS: 20,
     CURL: 30,
-    SPLAT_RADIUS: 0.5,
+    SPLAT_RADIUS: 0.3,
     SHADING: true,
     COLORFUL: true,
     PAUSED: false,
@@ -52,7 +52,7 @@ if (!ext.supportLinearFiltering)
     config.BLOOM = false;
 }
 
-startGUI();
+// startGUI();
 
 function getWebGLContext (canvas) {
     const params = { alpha: true, depth: false, stencil: false, antialias: false, preserveDrawingBuffer: false };
@@ -91,11 +91,6 @@ function getWebGLContext (canvas) {
         formatRG = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType);
         formatR = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType);
     }
-
-    if (formatRGBA == null)
-        ga('send', 'event', isWebGL2 ? 'webgl2' : 'webgl', 'not supported');
-    else
-        ga('send', 'event', isWebGL2 ? 'webgl2' : 'webgl', 'supported');
 
     return {
         gl,
@@ -178,7 +173,6 @@ function startGUI () {
 
     let github = gui.add({ fun : () => {
         window.open('https://github.com/PavelDoGreat/WebGL-Fluid-Simulation');
-        ga('send', 'event', 'link button', 'github');
     } }, 'fun').name('Github');
     github.__li.className = 'cr function bigFont';
     github.__li.style.borderLeft = '3px solid #8C8C8C';
@@ -187,7 +181,6 @@ function startGUI () {
     githubIcon.className = 'icon github';
 
     let twitter = gui.add({ fun : () => {
-        ga('send', 'event', 'link button', 'twitter');
         window.open('https://twitter.com/PavelDoGreat');
     } }, 'fun').name('Twitter');
     twitter.__li.className = 'cr function bigFont';
@@ -197,7 +190,6 @@ function startGUI () {
     twitterIcon.className = 'icon twitter';
 
     let discord = gui.add({ fun : () => {
-        ga('send', 'event', 'link button', 'discord');
         window.open('https://discordapp.com/invite/CeqZDDE');
     } }, 'fun').name('Discord');
     discord.__li.className = 'cr function bigFont';
@@ -207,7 +199,6 @@ function startGUI () {
     discordIcon.className = 'icon discord';
 
     let app = gui.add({ fun : () => {
-        ga('send', 'event', 'link button', 'app');
         window.open('http://onelink.to/5b58bn');
     } }, 'fun').name('Check out new improved version');
     app.__li.className = 'cr function appBigFont';
@@ -1237,7 +1228,7 @@ canvas.addEventListener('touchmove', e => {
     }
 }, false);
 
-canvas.addEventListener('mousedown', () => {
+canvas.addEventListener('mouseenter', () => {
     pointers[0].down = true;
     pointers[0].color = generateColor();
 });
@@ -1257,7 +1248,11 @@ canvas.addEventListener('touchstart', e => {
     }
 });
 
-window.addEventListener('mouseup', () => {
+canvas.addEventListener("mousedown", () => {
+    multipleSplats(parseInt(Math.random() * 20) + 5);
+});
+
+window.addEventListener('mouseleave', () => {
     pointers[0].down = false;
 });
 
