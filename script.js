@@ -23,8 +23,43 @@ let config = {
     BLOOM_RESOLUTION: 256,
     BLOOM_INTENSITY: 0.8,
     BLOOM_THRESHOLD: 0.6,
-    BLOOM_SOFT_KNEE: 0.7
+    BLOOM_SOFT_KNEE: 0.7,
+    POINTER_COLOR: { r: 0, g: 0.15, b: 0 }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    window.wallpaperPropertyListener = {
+        applyUserProperties: (properties) => {
+            if (properties.bloom_intensity) config.BLOOM_INTENSITY = properties.bloom_intensity.value;
+            if (properties.bloom_threshold) config.BLOOM_THRESHOLD = properties.bloom_threshold.value;
+            if (properties.colorful) config.COLORFUL = properties.colorful.value;
+            if (properties.density_diffusion) config.DENSITY_DISSIPATION = properties.density_diffusion.value;
+            if (properties.enable_bloom) config.BLOOM = properties.enable_bloom.value;
+            if (properties.paused) config.PAUSED = properties.paused.value;
+            if (properties.pressure_diffusion) config.PRESSURE_DISSIPATION = properties.pressure_diffusion.value;
+            if (properties.shading) config.SHADING = properties.shading.value;
+            if (properties.splat_radius) config.SPLAT_RADIUS = properties.splat_radius.value;
+            if (properties.velocity_diffusion) config.VELOCITY_DISSIPATION = properties.velocity_diffusion.value;
+            if (properties.vorticity) config.CURL = properties.vorticity.value;
+            if (properties.simulation_resolution) {
+                config.SIM_RESOLUTION = properties.simulation_resolution.value;
+                initFramebuffers();
+            }
+            if (properties.dye_resolution) {
+                config.DYE_RESOLUTION = properties.dye_resolution.value;
+                initFramebuffers();
+            }
+            if (properties.default_color) {
+                const c = properties.default_color.value.split(" ");
+                c = HSVtoRGB(RGBToHue(c[0], c[1], c[2]), 1.0, 1.0);
+                c.r *= 0.15;
+                c.g *= 0.15;
+                c.b *= 0.15;
+                config.POINTER_COLOR = c;
+            }
+        }
+    };
+});
 
 function pointerPrototype () {
     this.id = -1;
@@ -1301,6 +1336,38 @@ function HSVtoRGB (h, s, v) {
         g,
         b
     };
+}
+
+function RGBToHue(r, g, b) {
+  // Find greatest and smallest channel values
+  let cmin = Math.min(r,g,b),
+      cmax = Math.max(r,g,b),
+      delta = cmax - cmin,
+      h = 0,
+      s = 0,
+      l = 0;
+
+  // Calculate hue
+  // No difference
+  if (delta == 0)
+    h = 0;
+  // Red is max
+  else if (cmax == r)
+    h = ((g - b) / delta) % 6;
+  // Green is max
+  else if (cmax == g)
+    h = (b - r) / delta + 2;
+  // Blue is max
+  else
+    h = (r - g) / delta + 4;
+
+  h = Math.round(h * 60);
+    
+  // Make negative hues positive behind 360°
+  if (h < 0)
+      h += 360;
+
+  return h;
 }
 
 function getResolution (resolution) {
