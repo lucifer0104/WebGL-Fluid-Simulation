@@ -24,10 +24,13 @@ let config = {
     BLOOM_INTENSITY: 0.8,
     BLOOM_THRESHOLD: 0.6,
     BLOOM_SOFT_KNEE: 0.7,
-    POINTER_COLOR: { r: 0, g: 0.15, b: 0 }
+    POINTER_COLOR: { r: 0, g: 0.15, b: 0 },
+    SOUND_SENSITIVITY: 0.25,
+    NORMALIZE_VOLUME: true,
+    AUDIO_RESPONSIVE: true
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {   
     window.wallpaperPropertyListener = {
         applyUserProperties: (properties) => {
             if (properties.bloom_intensity) config.BLOOM_INTENSITY = properties.bloom_intensity.value;
@@ -41,6 +44,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (properties.splat_radius) config.SPLAT_RADIUS = properties.splat_radius.value;
             if (properties.velocity_diffusion) config.VELOCITY_DISSIPATION = properties.velocity_diffusion.value;
             if (properties.vorticity) config.CURL = properties.vorticity.value;
+            if (properties.sound_sensitivity) config.SOUND_SENSITIVITY = properties.sound_sensitivity.value;
+            if (properties.normalize_volume) config.NORMALIZE_VOLUME = properties.normalize_volume.value;
+            if (properties.audio_responsive) config.AUDIO_RESPONSIVE = properties.audio_responsive.value;
             if (properties.simulation_resolution) {
                 config.SIM_RESOLUTION = properties.simulation_resolution.value;
                 initFramebuffers();
@@ -50,8 +56,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 initFramebuffers();
             }
             if (properties.default_color) {
-                const c = properties.default_color.value.split(" ");
-                c = HSVtoRGB(RGBToHue(c[0], c[1], c[2]), 1.0, 1.0);
+                let c = properties.default_color.value.split(" ");
+                console.log(RGBToHue(c[0], c[1], c[2]));
+                c = HSVtoRGB(RGBToHue(c[0], c[1], c[2])/360, 1.0, 1.0);
                 c.r *= 0.15;
                 c.g *= 0.15;
                 c.b *= 0.15;
@@ -59,7 +66,52 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     };
+
+    window.wallpaperRegisterAudioListener((audioArray) => {
+        if (!config.AUDIO_RESPONSIVE) return;
+        if (String(audioArray[0]).startsWith("5.17")) return;
+        
+        if (config.NORMALIZE_VOLUME) {
+            let maxIndex = indexOfMax(audioArray);
+            let percent = 1.0 / audioArray[maxIndex];
+            
+            for (let i = 0; i < audioArray.length; i++) {
+                audioArray[i] *= percent;
+            }
+        }
+
+        let bass = 0.0;
+
+        for (let i = 0; i < 10; i++) {
+            bass += audioArray[i];
+        }
+        bass /= 9;
+        // if (bass >= config.SOUND_SENSITIVITY) multipleSplats(parseInt(Math.random() * 20) + 5);
+        if (config.NORMALIZE_VOLUME) {
+            multipleSplats(parseInt((bass * config.SOUND_SENSITIVITY) * 10));
+        } else {
+            multipleSplats(parseInt((bass * config.SOUND_SENSITIVITY * 2) * 10));
+        }
+    });
 });
+
+function indexOfMax(arr) {
+    if (arr.length === 0) {
+        return -1;
+    }
+
+    var max = arr[0];
+    var maxIndex = 0;
+
+    for (var i = 1; i < arr.length; i++) {
+        if (arr[i] > max) {
+            maxIndex = i;
+            max = arr[i];
+        }
+    }
+
+    return maxIndex;
+}
 
 function pointerPrototype () {
     this.id = -1;
@@ -1265,7 +1317,7 @@ canvas.addEventListener('touchmove', e => {
 
 canvas.addEventListener('mouseenter', () => {
     pointers[0].down = true;
-    pointers[0].color = generateColor();
+    pointers[0].color = config.POINTER_COLOR;
 });
 
 canvas.addEventListener('touchstart', e => {
@@ -1279,7 +1331,7 @@ canvas.addEventListener('touchstart', e => {
         pointers[i].down = true;
         pointers[i].x = touches[i].pageX;
         pointers[i].y = touches[i].pageY;
-        pointers[i].color = generateColor();
+        pointers[i].color = config.POINTER_COLOR;
     }
 });
 
