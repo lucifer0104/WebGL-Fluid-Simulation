@@ -1,4 +1,5 @@
 {
+	"approved" : true,
 	"contentrating" : "Everyone",
 	"description" : "Source Code: https://github.com/Delivator/WebGL-Fluid-Simulation\nCredit: https://github.com/PavelDoGreat/WebGL-Fluid-Simulation",
 	"file" : "index.html",
@@ -8,17 +9,24 @@
 		{
 			"audio_responsive" : 
 			{
-				"order" : 101,
+				"order" : 103,
 				"text" : "Audio Responsive",
 				"type" : "bool",
 				"value" : true
+			},
+			"background_color" : 
+			{
+				"order" : 100,
+				"text" : "Background Color",
+				"type" : "color",
+				"value" : "0 0 0"
 			},
 			"bloom_intensity" : 
 			{
 				"fraction" : true,
 				"max" : 2,
 				"min" : 0.10000000000000001,
-				"order" : 115,
+				"order" : 116,
 				"precision" : 2,
 				"step" : 0.01,
 				"text" : "Bloom Intensity",
@@ -30,7 +38,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0,
-				"order" : 116,
+				"order" : 117,
 				"precision" : 2,
 				"step" : 0.01,
 				"text" : "Bloom Threshold",
@@ -39,24 +47,17 @@
 			},
 			"colorful" : 
 			{
-				"order" : 112,
-				"text" : "Colorful",
+				"order" : 101,
+				"text" : "Random Color",
 				"type" : "bool",
 				"value" : true
-			},
-			"default_color" : 
-			{
-				"order" : 100,
-				"text" : "Default Color",
-				"type" : "color",
-				"value" : "0 1 0"
 			},
 			"density_diffusion" : 
 			{
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0.90000000000000002,
-				"order" : 106,
+				"order" : 108,
 				"precision" : 3,
 				"step" : 0.001,
 				"text" : "Density Diffusion",
@@ -92,28 +93,29 @@
 						"value" : "1024"
 					}
 				],
-				"order" : 105,
+				"order" : 107,
 				"text" : "Dye Resolution",
 				"type" : "combo",
 				"value" : "512"
 			},
 			"enable_bloom" : 
 			{
-				"order" : 114,
+				"order" : 115,
 				"text" : "Enable Bloom",
 				"type" : "bool",
 				"value" : true
 			},
 			"normalize_volume" : 
 			{
-				"order" : 103,
+				"condition" : "audio_responsive.value",
+				"order" : 105,
 				"text" : "\"Normalize\" Volume",
 				"type" : "bool",
 				"value" : true
 			},
 			"paused" : 
 			{
-				"order" : 113,
+				"order" : 114,
 				"text" : "Paused",
 				"type" : "bool",
 				"value" : false
@@ -123,7 +125,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0,
-				"order" : 108,
+				"order" : 110,
 				"precision" : 2,
 				"step" : 0.01,
 				"text" : "Pressure Diffusion",
@@ -139,7 +141,7 @@
 			},
 			"shading" : 
 			{
-				"order" : 111,
+				"order" : 113,
 				"text" : "Shading",
 				"type" : "bool",
 				"value" : true
@@ -165,29 +167,38 @@
 						"value" : "256"
 					}
 				],
-				"order" : 104,
+				"order" : 106,
 				"text" : "Simulation Resolution",
 				"type" : "combo",
 				"value" : "256"
 			},
 			"sound_sensitivity" : 
 			{
+				"condition" : "audio_responsive.value",
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0,
-				"order" : 102,
+				"order" : 104,
 				"precision" : 2,
-				"step" : 0.01,
+				"step" : 0.10000000000000001,
 				"text" : "Sound Sensitivity",
 				"type" : "slider",
 				"value" : 0.25
+			},
+			"splat_color" : 
+			{
+				"condition" : "!colorful.value",
+				"order" : 102,
+				"text" : "Splat Color",
+				"type" : "color",
+				"value" : "0 1 0"
 			},
 			"splat_radius" : 
 			{
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0.01,
-				"order" : 110,
+				"order" : 112,
 				"precision" : 2,
 				"step" : 0.01,
 				"text" : "Splat Radius",
@@ -199,7 +210,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0.90000000000000002,
-				"order" : 107,
+				"order" : 109,
 				"precision" : 3,
 				"step" : 0.001,
 				"text" : "Velocity Diffusion",
@@ -211,7 +222,7 @@
 				"fraction" : false,
 				"max" : 50,
 				"min" : 0,
-				"order" : 109,
+				"order" : 111,
 				"text" : "Vorticity",
 				"type" : "slider",
 				"value" : 30
@@ -221,7 +232,7 @@
 	},
 	"preview" : "preview.jpg",
 	"tags" : [ "Abstract" ],
-	"title" : "Colorful Fluid Animation",
+	"title" : "Colorful Fluid Animation [Audio Responsive]",
 	"type" : "web",
 	"visibility" : "public",
 	"workshopid" : "1748506393"

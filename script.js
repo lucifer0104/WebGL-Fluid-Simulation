@@ -55,14 +55,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 config.DYE_RESOLUTION = properties.dye_resolution.value;
                 initFramebuffers();
             }
-            if (properties.default_color) {
-                let c = properties.default_color.value.split(" ");
-                console.log(RGBToHue(c[0], c[1], c[2]));
-                c = HSVtoRGB(RGBToHue(c[0], c[1], c[2])/360, 1.0, 1.0);
-                c.r *= 0.15;
-                c.g *= 0.15;
-                c.b *= 0.15;
-                config.POINTER_COLOR = c;
+            if (properties.splat_color) {
+                let c = properties.splat_color.value.split(" ");
+                let hue = RGBToHue(c[0], c[1], c[2]);
+                let c2 = HSVtoRGB(hue/360, 1.0, 1.0);
+                c2.r *= 0.15;
+                c2.g *= 0.15;
+                c2.b *= 0.15;
+                config.POINTER_COLOR = c2;
+            }
+            if (properties.background_color) {
+                let c = properties.background_color.value.split(" ");
+                config.BACK_COLOR.r = Math.floor(c[0]*255);
+                config.BACK_COLOR.g = Math.floor(c[1]*255);
+                config.BACK_COLOR.b = Math.floor(c[2]*255);
             }
         }
     };
@@ -1040,7 +1046,7 @@ function createTextureAsync (url) {
 }
 
 initFramebuffers();
-multipleSplats(parseInt(Math.random() * 20) + 5);
+multipleSplats(parseInt(Math.random() * 20) + 3);
 
 let lastColorChangeTime = Date.now();
 
@@ -1274,7 +1280,7 @@ function splat (x, y, dx, dy, color) {
 
 function multipleSplats (amount) {
     for (let i = 0; i < amount; i++) {
-        const color = generateColor();
+        const color = config.COLORFUL ? generateColor() : Object.assign({}, config.POINTER_COLOR);
         color.r *= 10.0;
         color.g *= 10.0;
         color.b *= 10.0;
