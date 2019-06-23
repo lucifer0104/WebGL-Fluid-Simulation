@@ -4,6 +4,12 @@ const canvas = document.getElementsByTagName('canvas')[0];
 canvas.width = canvas.clientWidth;
 canvas.height = canvas.clientHeight;
 
+Array.prototype.getRandom = function() {
+    return this[Math.floor(Math.random() * this.length)];
+};
+
+let splatColors = [{ r: 0, g: 0.15, b: 0 }];
+
 let config = {
     SIM_RESOLUTION: 256,
     DYE_RESOLUTION: 1024,
@@ -24,11 +30,11 @@ let config = {
     BLOOM_INTENSITY: 0.8,
     BLOOM_THRESHOLD: 0.6,
     BLOOM_SOFT_KNEE: 0.7,
-    POINTER_COLOR: { r: 0, g: 0.15, b: 0 },
+    POINTER_COLOR: [{ r: 0, g: 0.15, b: 0 }],
     SOUND_SENSITIVITY: 0.25,
     NORMALIZE_VOLUME: true,
     AUDIO_RESPONSIVE: true
-}
+};
 
 document.addEventListener("DOMContentLoaded", () => {   
     window.wallpaperPropertyListener = {
@@ -55,21 +61,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 config.DYE_RESOLUTION = properties.dye_resolution.value;
                 initFramebuffers();
             }
-            if (properties.splat_color) {
-                let c = properties.splat_color.value.split(" ");
-                let hue = RGBToHue(c[0], c[1], c[2]);
-                let c2 = HSVtoRGB(hue/360, 1.0, 1.0);
-                c2.r *= 0.15;
-                c2.g *= 0.15;
-                c2.b *= 0.15;
-                config.POINTER_COLOR = c2;
-            }
+            if (properties.splat_color) splatColors[0] = rgbToPointerColor(properties.splat_color.value);
+            if (properties.splat_color_2) splatColors[1] = rgbToPointerColor(properties.splat_color_2.value);
+            if (properties.splat_color_3) splatColors[2] = rgbToPointerColor(properties.splat_color_3.value);
+            if (properties.splat_color_4) splatColors[3] = rgbToPointerColor(properties.splat_color_4.value);
+            if (properties.splat_color_5) splatColors[4] = rgbToPointerColor(properties.splat_color_5.value);
             if (properties.background_color) {
-                let c = properties.background_color.value.split(" ");
-                config.BACK_COLOR.r = Math.floor(c[0]*255);
-                config.BACK_COLOR.g = Math.floor(c[1]*255);
-                config.BACK_COLOR.b = Math.floor(c[2]*255);
+                let c = properties.background_color.value.split(" "),
+                    r = Math.floor(c[0]*255),
+                    g = Math.floor(c[1]*255),
+                    b = Math.floor(c[2]*255);
+                document.body.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+                config.BACK_COLOR.r = r;
+                config.BACK_COLOR.g = g;
+                config.BACK_COLOR.b = b;
             }
+            if (properties.more_colors && !properties.more_colors.value) {
+                config.POINTER_COLOR = [splatColors[0]];
+            } else if (properties.more_colors && properties.more_colors.value) {
+                config.POINTER_COLOR = splatColors;
+            }
+            if (properties.use_background_image) config.TRANSPARENT = properties.use_background_image.value;
+            if (properties.background_image) canvas.style.backgroundImage = `url("file:///${properties.background_image.value}")`;
+            if (properties.repeat_background) canvas.style.backgroundRepeat = properties.repeat_background.value ? "repeat" : "no-repeat";
+            if (properties.background_image_size) canvas.style.backgroundSize = properties.background_image_size.value;
         }
     };
 
@@ -442,20 +457,8 @@ const colorShader = compileShader(gl.FRAGMENT_SHADER, `
 `);
 
 const backgroundShader = compileShader(gl.FRAGMENT_SHADER, `
-    precision highp float;
-    precision highp sampler2D;
-
-    varying vec2 vUv;
-    uniform sampler2D uTexture;
-    uniform float aspectRatio;
-
-    #define SCALE 25.0
-
     void main () {
-        vec2 uv = floor(vUv * SCALE * vec2(aspectRatio, 1.0));
-        float v = mod(uv.x + uv.y, 2.0);
-        v = v * 0.1 + 0.8;
-        gl_FragColor = vec4(vec3(v), 1.0);
+        gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
     }
 `);
 
@@ -1073,15 +1076,12 @@ function input () {
         }
     }
 
-    if (!config.COLORFUL)
-        return;
-
     if (lastColorChangeTime + 100 < Date.now())
     {
         lastColorChangeTime = Date.now();
         for (let i = 0; i < pointers.length; i++) {
             const p = pointers[i];
-            p.color = generateColor();
+            p.color = config.COLORFUL ? generateColor() : config.POINTER_COLOR.getRandom();
         }
     }
 }
@@ -1280,7 +1280,7 @@ function splat (x, y, dx, dy, color) {
 
 function multipleSplats (amount) {
     for (let i = 0; i < amount; i++) {
-        const color = config.COLORFUL ? generateColor() : Object.assign({}, config.POINTER_COLOR);
+        const color = config.COLORFUL ? generateColor() : Object.assign({}, config.POINTER_COLOR.getRandom());
         color.r *= 10.0;
         color.g *= 10.0;
         color.b *= 10.0;
@@ -1323,7 +1323,7 @@ canvas.addEventListener('touchmove', e => {
 
 canvas.addEventListener('mouseenter', () => {
     pointers[0].down = true;
-    pointers[0].color = config.POINTER_COLOR;
+    pointers[0].color = config.POINTER_COLOR.getRandom();
 });
 
 canvas.addEventListener('touchstart', e => {
@@ -1337,7 +1337,7 @@ canvas.addEventListener('touchstart', e => {
         pointers[i].down = true;
         pointers[i].x = touches[i].pageX;
         pointers[i].y = touches[i].pageY;
-        pointers[i].color = config.POINTER_COLOR;
+        pointers[i].color = config.POINTER_COLOR.getRandom();
     }
 });
 
@@ -1447,4 +1447,14 @@ function getTextureScale (texture, width, height) {
         x: width / texture.width,
         y: height / texture.height
     };
+}
+
+function rgbToPointerColor(color) {
+    let c = color.split(" ");
+    let hue = RGBToHue(c[0], c[1], c[2]);
+    let c2 = HSVtoRGB(hue/360, 1.0, 1.0);
+    c2.r *= 0.15;
+    c2.g *= 0.15;
+    c2.b *= 0.15;
+    return c2;
 }
