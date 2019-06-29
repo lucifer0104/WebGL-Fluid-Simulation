@@ -54,7 +54,7 @@
 				"fraction" : true,
 				"max" : 2,
 				"min" : 0.10000000000000001,
-				"order" : 125,
+				"order" : 126,
 				"precision" : 2,
 				"step" : 0.01,
 				"text" : "Bloom Intensity",
@@ -66,7 +66,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0,
-				"order" : 126,
+				"order" : 127,
 				"precision" : 2,
 				"step" : 0.01,
 				"text" : "Bloom Threshold",
@@ -85,7 +85,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0.90000000000000002,
-				"order" : 117,
+				"order" : 118,
 				"precision" : 3,
 				"step" : 0.001,
 				"text" : "Density Diffusion",
@@ -121,17 +121,37 @@
 						"value" : "1024"
 					}
 				],
-				"order" : 116,
+				"order" : 117,
 				"text" : "Dye Resolution",
 				"type" : "combo",
 				"value" : "512"
 			},
 			"enable_bloom" : 
 			{
-				"order" : 124,
+				"order" : 125,
 				"text" : "Enable Bloom",
 				"type" : "bool",
 				"value" : true
+			},
+			"frequency_range" : 
+			{
+				"fraction" : false,
+				"max" : 62,
+				"min" : 1,
+				"order" : 114,
+				"text" : "Frequency Range",
+				"type" : "slider",
+				"value" : 8
+			},
+			"frequency_range_start" : 
+			{
+				"fraction" : false,
+				"max" : 62,
+				"min" : 0,
+				"order" : 115,
+				"text" : "Frequency Range Start",
+				"type" : "slider",
+				"value" : 0
 			},
 			"more_colors" : 
 			{
@@ -141,17 +161,9 @@
 				"type" : "bool",
 				"value" : false
 			},
-			"normalize_volume" : 
-			{
-				"condition" : "audio_responsive.value",
-				"order" : 114,
-				"text" : "\"Normalize\" Volume",
-				"type" : "bool",
-				"value" : true
-			},
 			"paused" : 
 			{
-				"order" : 123,
+				"order" : 124,
 				"text" : "Paused",
 				"type" : "bool",
 				"value" : false
@@ -161,7 +173,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0,
-				"order" : 119,
+				"order" : 120,
 				"precision" : 2,
 				"step" : 0.01,
 				"text" : "Pressure Diffusion",
@@ -185,7 +197,7 @@
 			},
 			"shading" : 
 			{
-				"order" : 122,
+				"order" : 123,
 				"text" : "Shading",
 				"type" : "bool",
 				"value" : true
@@ -211,7 +223,7 @@
 						"value" : "256"
 					}
 				],
-				"order" : 115,
+				"order" : 116,
 				"text" : "Simulation Resolution",
 				"type" : "combo",
 				"value" : "256"
@@ -220,14 +232,14 @@
 			{
 				"condition" : "audio_responsive.value",
 				"fraction" : true,
-				"max" : 1,
+				"max" : 10,
 				"min" : 0,
 				"order" : 113,
 				"precision" : 3,
 				"step" : 0.01,
 				"text" : "Sound Sensitivity",
 				"type" : "slider",
-				"value" : 0.25
+				"value" : 5
 			},
 			"splat_color" : 
 			{
@@ -274,7 +286,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0.01,
-				"order" : 121,
+				"order" : 122,
 				"precision" : 2,
 				"step" : 0.01,
 				"text" : "Splat Radius",
@@ -293,7 +305,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0.90000000000000002,
-				"order" : 118,
+				"order" : 119,
 				"precision" : 3,
 				"step" : 0.001,
 				"text" : "Velocity Diffusion",
@@ -305,7 +317,7 @@
 				"fraction" : false,
 				"max" : 50,
 				"min" : 0,
-				"order" : 120,
+				"order" : 121,
 				"text" : "Vorticity",
 				"type" : "slider",
 				"value" : 30

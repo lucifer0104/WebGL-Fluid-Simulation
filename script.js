@@ -32,8 +32,9 @@ let config = {
     BLOOM_SOFT_KNEE: 0.7,
     POINTER_COLOR: [{ r: 0, g: 0.15, b: 0 }],
     SOUND_SENSITIVITY: 0.25,
-    NORMALIZE_VOLUME: true,
-    AUDIO_RESPONSIVE: true
+    AUDIO_RESPONSIVE: true,
+    FREQ_RANGE: 8,
+    FREQ_RANGE_START: 0
 };
 
 document.addEventListener("DOMContentLoaded", () => {   
@@ -51,7 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (properties.velocity_diffusion) config.VELOCITY_DISSIPATION = properties.velocity_diffusion.value;
             if (properties.vorticity) config.CURL = properties.vorticity.value;
             if (properties.sound_sensitivity) config.SOUND_SENSITIVITY = properties.sound_sensitivity.value;
-            if (properties.normalize_volume) config.NORMALIZE_VOLUME = properties.normalize_volume.value;
             if (properties.audio_responsive) config.AUDIO_RESPONSIVE = properties.audio_responsive.value;
             if (properties.simulation_resolution) {
                 config.SIM_RESOLUTION = properties.simulation_resolution.value;
@@ -68,9 +68,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (properties.splat_color_5) splatColors[4] = rgbToPointerColor(properties.splat_color_5.value);
             if (properties.background_color) {
                 let c = properties.background_color.value.split(" "),
-                    r = Math.floor(c[0]*255),
-                    g = Math.floor(c[1]*255),
-                    b = Math.floor(c[2]*255);
+                r = Math.floor(c[0]*255),
+                g = Math.floor(c[1]*255),
+                b = Math.floor(c[2]*255);
                 document.body.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
                 config.BACK_COLOR.r = r;
                 config.BACK_COLOR.g = g;
@@ -85,34 +85,36 @@ document.addEventListener("DOMContentLoaded", () => {
             if (properties.background_image) canvas.style.backgroundImage = `url("file:///${properties.background_image.value}")`;
             if (properties.repeat_background) canvas.style.backgroundRepeat = properties.repeat_background.value ? "repeat" : "no-repeat";
             if (properties.background_image_size) canvas.style.backgroundSize = properties.background_image_size.value;
+            if (properties.frequency_range) {
+                config.FREQ_RANGE = properties.frequency_range.value;
+
+                if (config.FREQ_RANGE + config.FREQ_RANGE_START > 61) {
+                    config.FREQ_RANGE_START = 62 - config.FREQ_RANGE;
+                }
+            }
+            if (properties.frequency_range_start) {
+                if (config.FREQ_RANGE + properties.frequency_range_start.value > 61) {
+                    config.FREQ_RANGE_START = 62 - config.FREQ_RANGE;
+                } else {
+                    config.FREQ_RANGE_START = properties.frequency_range_start.value;
+                }
+            };
         }
     };
 
     window.wallpaperRegisterAudioListener((audioArray) => {
         if (!config.AUDIO_RESPONSIVE) return;
-        if (String(audioArray[0]).startsWith("5.17")) return;
-        
-        if (config.NORMALIZE_VOLUME) {
-            let maxIndex = indexOfMax(audioArray);
-            let percent = 1.0 / audioArray[maxIndex];
-            
-            for (let i = 0; i < audioArray.length; i++) {
-                audioArray[i] *= percent;
-            }
-        }
+        if (audioArray[0] > 5) return;
 
         let bass = 0.0;
+        let half = Math.floor(audioArray.length / 2);
 
-        for (let i = 0; i < 10; i++) {
-            bass += audioArray[i];
+        for (let i = 0; i <= config.FREQ_RANGE; i++) {
+            bass += audioArray[i + config.FREQ_RANGE_START];
+            bass += audioArray[half + (i + config.FREQ_RANGE_START)];
         }
-        bass /= 9;
-        // if (bass >= config.SOUND_SENSITIVITY) multipleSplats(parseInt(Math.random() * 20) + 5);
-        if (config.NORMALIZE_VOLUME) {
-            multipleSplats(parseInt((bass * config.SOUND_SENSITIVITY) * 10));
-        } else {
-            multipleSplats(parseInt((bass * config.SOUND_SENSITIVITY * 2) * 10));
-        }
+        bass /= (config.FREQ_RANGE * 2);
+        multipleSplats(parseInt((bass * config.SOUND_SENSITIVITY) * 10));
     });
 });
 
