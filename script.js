@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
             bass += audioArray[half + (i + config.FREQ_RANGE_START)];
         }
         bass /= (config.FREQ_RANGE * 2);
-        multipleSplats(parseInt((bass * config.SOUND_SENSITIVITY) * 10));
+        multipleSplats(Math.floor((bass * config.SOUND_SENSITIVITY) * 10));
     });
 });
 
