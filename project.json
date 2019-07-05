@@ -9,7 +9,7 @@
 		{
 			"audio_responsive" : 
 			{
-				"order" : 112,
+				"order" : 113,
 				"text" : "Audio Responsive",
 				"type" : "bool",
 				"value" : true
@@ -54,7 +54,7 @@
 				"fraction" : true,
 				"max" : 2,
 				"min" : 0.10000000000000001,
-				"order" : 126,
+				"order" : 127,
 				"precision" : 2,
 				"step" : 0.01,
 				"text" : "Bloom Intensity",
@@ -66,7 +66,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0,
-				"order" : 127,
+				"order" : 128,
 				"precision" : 2,
 				"step" : 0.01,
 				"text" : "Bloom Threshold",
@@ -85,7 +85,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0.90000000000000002,
-				"order" : 118,
+				"order" : 119,
 				"precision" : 3,
 				"step" : 0.001,
 				"text" : "Density Diffusion",
@@ -121,14 +121,14 @@
 						"value" : "1024"
 					}
 				],
-				"order" : 117,
+				"order" : 118,
 				"text" : "Dye Resolution",
 				"type" : "combo",
 				"value" : "512"
 			},
 			"enable_bloom" : 
 			{
-				"order" : 125,
+				"order" : 126,
 				"text" : "Enable Bloom",
 				"type" : "bool",
 				"value" : true
@@ -138,7 +138,7 @@
 				"fraction" : false,
 				"max" : 62,
 				"min" : 1,
-				"order" : 114,
+				"order" : 115,
 				"text" : "Frequency Range",
 				"type" : "slider",
 				"value" : 8
@@ -148,10 +148,18 @@
 				"fraction" : false,
 				"max" : 62,
 				"min" : 0,
-				"order" : 115,
+				"order" : 116,
 				"text" : "Frequency Range Start",
 				"type" : "slider",
 				"value" : 0
+			},
+			"make_colors_audio_responsive" : 
+			{
+				"condition" : "more_colors.value && !colorful.value",
+				"order" : 108,
+				"text" : "Make Colors Audio Responsive",
+				"type" : "bool",
+				"value" : false
 			},
 			"more_colors" : 
 			{
@@ -163,7 +171,7 @@
 			},
 			"paused" : 
 			{
-				"order" : 124,
+				"order" : 125,
 				"text" : "Paused",
 				"type" : "bool",
 				"value" : false
@@ -173,7 +181,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0,
-				"order" : 120,
+				"order" : 121,
 				"precision" : 2,
 				"step" : 0.01,
 				"text" : "Pressure Diffusion",
@@ -197,7 +205,7 @@
 			},
 			"shading" : 
 			{
-				"order" : 123,
+				"order" : 124,
 				"text" : "Shading",
 				"type" : "bool",
 				"value" : true
@@ -223,7 +231,7 @@
 						"value" : "256"
 					}
 				],
-				"order" : 116,
+				"order" : 117,
 				"text" : "Simulation Resolution",
 				"type" : "combo",
 				"value" : "256"
@@ -234,7 +242,7 @@
 				"fraction" : true,
 				"max" : 10,
 				"min" : 0,
-				"order" : 113,
+				"order" : 114,
 				"precision" : 3,
 				"step" : 0.01,
 				"text" : "Sound Sensitivity",
@@ -252,7 +260,7 @@
 			"splat_color_2" : 
 			{
 				"condition" : "more_colors.value && !colorful.value",
-				"order" : 108,
+				"order" : 109,
 				"text" : "Splat Color 2",
 				"type" : "color",
 				"value" : "0 1 1"
@@ -260,7 +268,7 @@
 			"splat_color_3" : 
 			{
 				"condition" : "more_colors.value && !colorful.value",
-				"order" : 109,
+				"order" : 110,
 				"text" : "Splat Color 3",
 				"type" : "color",
 				"value" : "0 0 1"
@@ -268,7 +276,7 @@
 			"splat_color_4" : 
 			{
 				"condition" : "more_colors.value && !colorful.value",
-				"order" : 110,
+				"order" : 111,
 				"text" : "Splat Color 4",
 				"type" : "color",
 				"value" : "1 0 0"
@@ -276,7 +284,7 @@
 			"splat_color_5" : 
 			{
 				"condition" : "more_colors.value && !colorful.value",
-				"order" : 111,
+				"order" : 112,
 				"text" : "Splat Color 5",
 				"type" : "color",
 				"value" : "0.9411764705882353 1 0"
@@ -286,7 +294,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0.01,
-				"order" : 122,
+				"order" : 123,
 				"precision" : 2,
 				"step" : 0.01,
 				"text" : "Splat Radius",
@@ -305,7 +313,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0.90000000000000002,
-				"order" : 119,
+				"order" : 120,
 				"precision" : 3,
 				"step" : 0.001,
 				"text" : "Velocity Diffusion",
@@ -317,7 +325,7 @@
 				"fraction" : false,
 				"max" : 50,
 				"min" : 0,
-				"order" : 121,
+				"order" : 122,
 				"text" : "Vorticity",
 				"type" : "slider",
 				"value" : 30

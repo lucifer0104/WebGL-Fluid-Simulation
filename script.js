@@ -34,7 +34,8 @@ let config = {
     SOUND_SENSITIVITY: 0.25,
     AUDIO_RESPONSIVE: true,
     FREQ_RANGE: 8,
-    FREQ_RANGE_START: 0
+    FREQ_RANGE_START: 0,
+    AUDIO_RESPONSIVE_COLORS: false
 };
 
 document.addEventListener("DOMContentLoaded", () => {   
@@ -98,13 +99,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     config.FREQ_RANGE_START = properties.frequency_range_start.value;
                 }
-            };
+            }
+            if (properties.make_colors_audio_responsive) config.AUDIO_RESPONSIVE_COLORS = properties.make_colors_audio_responsive.value;
         }
     };
 
     window.wallpaperRegisterAudioListener((audioArray) => {
         if (!config.AUDIO_RESPONSIVE) return;
-        if (audioArray[0] > 5) return;
 
         let bass = 0.0;
         let half = Math.floor(audioArray.length / 2);
@@ -114,7 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
             bass += audioArray[half + (i + config.FREQ_RANGE_START)];
         }
         bass /= (config.FREQ_RANGE * 2);
-        multipleSplats(parseInt((bass * config.SOUND_SENSITIVITY) * 10));
+
+        multipleSplats(Math.floor((bass * config.SOUND_SENSITIVITY) * 10), bass);
     });
 });
 
@@ -1280,9 +1282,27 @@ function splat (x, y, dx, dy, color) {
     density.swap();
 }
 
-function multipleSplats (amount) {
+function multipleSplats (amount, bass = 0.0) {
     for (let i = 0; i < amount; i++) {
-        const color = config.COLORFUL ? generateColor() : Object.assign({}, config.POINTER_COLOR.getRandom());
+
+        let color = config.COLORFUL ? generateColor() : Object.assign({}, config.POINTER_COLOR.getRandom());
+
+        if (config.AUDIO_RESPONSIVE_COLORS) {
+            bass = bass * (config.SOUND_SENSITIVITY / 10);
+            console.log(bass, splatColors);
+            if (bass < 0.2) {
+                color = Object.assign({}, splatColors[0]);
+            } else if (bass > 0.2) {
+                color = Object.assign({}, splatColors[1]);
+            } else if (bass > 0.4) {
+                color = Object.assign({}, splatColors[2]);
+            } else if (bass > 0.6) {
+                color = Object.assign({}, splatColors[3]);
+            } else if (bass > 0.8) {
+                color = Object.assign({}, splatColors[4]);
+            }
+        }
+
         color.r *= 10.0;
         color.g *= 10.0;
         color.b *= 10.0;
