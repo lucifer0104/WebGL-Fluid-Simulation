@@ -10,6 +10,12 @@ Array.prototype.getRandom = function() {
 
 let splatColors = [{ r: 0, g: 0.15, b: 0 }];
 
+let idleSplats;
+
+function idleSplatsFunction() {
+    multipleSplats(parseInt(Math.random() * config.RANDOM_AMOUNT) + (config.RANDOM_AMOUNT / 2) + 1);
+}
+
 let config = {
     SIM_RESOLUTION: 256,
     DYE_RESOLUTION: 1024,
@@ -34,7 +40,10 @@ let config = {
     SOUND_SENSITIVITY: 0.25,
     AUDIO_RESPONSIVE: true,
     FREQ_RANGE: 8,
-    FREQ_RANGE_START: 0
+    FREQ_RANGE_START: 0,
+    IDLE_SPLATS: false,
+    RANDOM_AMOUNT: 10,
+    RANDOM_INTERVAL: 1
 };
 
 document.addEventListener("DOMContentLoaded", () => {   
@@ -98,7 +107,29 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     config.FREQ_RANGE_START = properties.frequency_range_start.value;
                 }
-            };
+            }
+            if (properties.idle_random_splats) {
+                config.IDLE_SPLATS = properties.idle_random_splats.value;
+                if (properties.idle_random_splats.value) {
+                    idleSplats = setInterval(idleSplatsFunction, config.RANDOM_INTERVAL * 1000);
+                } else {
+                    clearInterval(idleSplats);
+                }
+            }
+            if (properties.random_splat_interval) {
+                config.RANDOM_INTERVAL = properties.random_splat_interval.value;
+                if (config.IDLE_SPLATS) {
+                    clearInterval(idleSplats);
+                    idleSplats = setInterval(idleSplatsFunction, config.RANDOM_INTERVAL * 1000);
+                }
+            }
+            if (properties.random_splat_amount) {
+                config.RANDOM_AMOUNT = properties.random_splat_amount.value;
+                if (config.IDLE_SPLATS) {
+                    clearInterval(idleSplats);
+                    idleSplats = setInterval(idleSplatsFunction, config.RANDOM_INTERVAL * 1000);
+                }
+            }
         }
     };
 
