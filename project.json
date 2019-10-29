@@ -119,6 +119,14 @@
 					{
 						"label" : "1024",
 						"value" : "1024"
+					},
+					{
+						"label" : "2048",
+						"value" : "2048"
+					},
+					{
+						"label" : "4096",
+						"value" : "4096"
 					}
 				],
 				"order" : 120,
@@ -208,7 +216,7 @@
 				"min" : 0,
 				"order" : 106,
 				"precision" : 2,
-				"step" : 0.1,
+				"step" : 0.10000000000000001,
 				"text" : "Random Splat Interval",
 				"type" : "slider",
 				"value" : 1
