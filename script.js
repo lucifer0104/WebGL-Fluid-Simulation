@@ -43,7 +43,8 @@ let config = {
     FREQ_RANGE_START: 0,
     IDLE_SPLATS: false,
     RANDOM_AMOUNT: 10,
-    RANDOM_INTERVAL: 1
+    RANDOM_INTERVAL: 1,
+    SPLAT_ON_CLICK: true
 };
 
 document.addEventListener("DOMContentLoaded", () => {   
@@ -130,6 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     idleSplats = setInterval(idleSplatsFunction, config.RANDOM_INTERVAL * 1000);
                 }
             }
+            if (properties.splat_on_click) config.SPLAT_ON_CLICK = properties.splat_on_click.value;
         }
     };
 
@@ -1354,6 +1356,7 @@ canvas.addEventListener('mouseenter', () => {
 });
 
 canvas.addEventListener('touchstart', e => {
+    if (!config.SPLAT_ON_CLICK) return;
     e.preventDefault();
     const touches = e.targetTouches;
     for (let i = 0; i < touches.length; i++) {
@@ -1369,6 +1372,7 @@ canvas.addEventListener('touchstart', e => {
 });
 
 canvas.addEventListener("mousedown", () => {
+    if (!config.SPLAT_ON_CLICK) return;
     multipleSplats(parseInt(Math.random() * 20) + 5);
 });
 
