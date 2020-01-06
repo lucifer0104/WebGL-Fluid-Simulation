@@ -9,14 +9,14 @@
 		{
 			"audio_responsive" : 
 			{
-				"order" : 116,
+				"order" : 117,
 				"text" : "Audio Responsive",
 				"type" : "bool",
 				"value" : true
 			},
 			"background_color" : 
 			{
-				"order" : 105,
+				"order" : 106,
 				"text" : "Background Color",
 				"type" : "color",
 				"value" : "0 0 0"
@@ -25,7 +25,7 @@
 			{
 				"condition" : "use_background_image.value",
 				"fileType" : "image",
-				"order" : 102,
+				"order" : 103,
 				"text" : "Background Image",
 				"type" : "file",
 				"value" : ""
@@ -44,7 +44,7 @@
 						"value" : "Cover"
 					}
 				],
-				"order" : 104,
+				"order" : 105,
 				"text" : "Background Image Size",
 				"type" : "combo",
 				"value" : "contain"
@@ -54,7 +54,7 @@
 				"fraction" : true,
 				"max" : 2,
 				"min" : 0.10000000000000001,
-				"order" : 130,
+				"order" : 131,
 				"precision" : 2,
 				"step" : 0.01,
 				"text" : "Bloom Intensity",
@@ -66,7 +66,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0,
-				"order" : 131,
+				"order" : 132,
 				"precision" : 2,
 				"step" : 0.01,
 				"text" : "Bloom Threshold",
@@ -75,7 +75,7 @@
 			},
 			"colorful" : 
 			{
-				"order" : 109,
+				"order" : 110,
 				"text" : "Random Color",
 				"type" : "bool",
 				"value" : true
@@ -85,7 +85,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0.90000000000000002,
-				"order" : 122,
+				"order" : 123,
 				"precision" : 3,
 				"step" : 0.001,
 				"text" : "Density Diffusion",
@@ -129,14 +129,14 @@
 						"value" : "4096"
 					}
 				],
-				"order" : 121,
+				"order" : 122,
 				"text" : "Dye Resolution",
 				"type" : "combo",
 				"value" : "512"
 			},
 			"enable_bloom" : 
 			{
-				"order" : 129,
+				"order" : 130,
 				"text" : "Enable Bloom",
 				"type" : "bool",
 				"value" : true
@@ -146,7 +146,7 @@
 				"fraction" : false,
 				"max" : 62,
 				"min" : 1,
-				"order" : 118,
+				"order" : 119,
 				"text" : "Frequency Range",
 				"type" : "slider",
 				"value" : 8
@@ -156,14 +156,14 @@
 				"fraction" : false,
 				"max" : 62,
 				"min" : 0,
-				"order" : 119,
+				"order" : 120,
 				"text" : "Frequency Range Start",
 				"type" : "slider",
 				"value" : 0
 			},
 			"idle_random_splats" : 
 			{
-				"order" : 106,
+				"order" : 107,
 				"text" : "Idle Random Splats",
 				"type" : "bool",
 				"value" : false
@@ -171,14 +171,14 @@
 			"more_colors" : 
 			{
 				"condition" : "!colorful.value",
-				"order" : 111,
+				"order" : 112,
 				"text" : "More Colors",
 				"type" : "bool",
 				"value" : false
 			},
 			"paused" : 
 			{
-				"order" : 128,
+				"order" : 129,
 				"text" : "Paused",
 				"type" : "bool",
 				"value" : false
@@ -188,7 +188,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0,
-				"order" : 124,
+				"order" : 125,
 				"precision" : 2,
 				"step" : 0.01,
 				"text" : "Pressure Diffusion",
@@ -201,7 +201,7 @@
 				"fraction" : true,
 				"max" : 100,
 				"min" : 1,
-				"order" : 108,
+				"order" : 109,
 				"precision" : 2,
 				"step" : 1,
 				"text" : "Random Splat Amount",
@@ -214,7 +214,7 @@
 				"fraction" : true,
 				"max" : 10,
 				"min" : 0,
-				"order" : 107,
+				"order" : 108,
 				"precision" : 2,
 				"step" : 0.10000000000000001,
 				"text" : "Random Splat Interval",
@@ -224,7 +224,7 @@
 			"repeat_background" : 
 			{
 				"condition" : "use_background_image.value",
-				"order" : 103,
+				"order" : 104,
 				"text" : "Repeat Background",
 				"type" : "bool",
 				"value" : false
@@ -238,8 +238,15 @@
 			},
 			"shading" : 
 			{
-				"order" : 127,
+				"order" : 128,
 				"text" : "Shading",
+				"type" : "bool",
+				"value" : true
+			},
+			"show_mouse_movement" : 
+			{
+				"order" : 100,
+				"text" : "Show Mouse Movement",
 				"type" : "bool",
 				"value" : true
 			},
@@ -264,7 +271,7 @@
 						"value" : "256"
 					}
 				],
-				"order" : 120,
+				"order" : 121,
 				"text" : "Simulation Resolution",
 				"type" : "combo",
 				"value" : "256"
@@ -275,7 +282,7 @@
 				"fraction" : true,
 				"max" : 10,
 				"min" : 0,
-				"order" : 117,
+				"order" : 118,
 				"precision" : 3,
 				"step" : 0.01,
 				"text" : "Sound Sensitivity",
@@ -285,7 +292,7 @@
 			"splat_color" : 
 			{
 				"condition" : "!colorful.value",
-				"order" : 110,
+				"order" : 111,
 				"text" : "Splat Color",
 				"type" : "color",
 				"value" : "0 1 0"
@@ -293,7 +300,7 @@
 			"splat_color_2" : 
 			{
 				"condition" : "more_colors.value && !colorful.value",
-				"order" : 112,
+				"order" : 113,
 				"text" : "Splat Color 2",
 				"type" : "color",
 				"value" : "0 1 1"
@@ -301,7 +308,7 @@
 			"splat_color_3" : 
 			{
 				"condition" : "more_colors.value && !colorful.value",
-				"order" : 113,
+				"order" : 114,
 				"text" : "Splat Color 3",
 				"type" : "color",
 				"value" : "0 0 1"
@@ -309,7 +316,7 @@
 			"splat_color_4" : 
 			{
 				"condition" : "more_colors.value && !colorful.value",
-				"order" : 114,
+				"order" : 115,
 				"text" : "Splat Color 4",
 				"type" : "color",
 				"value" : "1 0 0"
@@ -317,14 +324,14 @@
 			"splat_color_5" : 
 			{
 				"condition" : "more_colors.value && !colorful.value",
-				"order" : 115,
+				"order" : 116,
 				"text" : "Splat Color 5",
 				"type" : "color",
 				"value" : "0.9411764705882353 1 0"
 			},
 			"splat_on_click" : 
 			{
-				"order" : 100,
+				"order" : 101,
 				"text" : "Splat on click",
 				"type" : "bool",
 				"value" : true
@@ -334,7 +341,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0.01,
-				"order" : 126,
+				"order" : 127,
 				"precision" : 2,
 				"step" : 0.01,
 				"text" : "Splat Radius",
@@ -343,7 +350,7 @@
 			},
 			"use_background_image" : 
 			{
-				"order" : 101,
+				"order" : 102,
 				"text" : "Use Background Image",
 				"type" : "bool",
 				"value" : false
@@ -353,7 +360,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0.90000000000000002,
-				"order" : 123,
+				"order" : 124,
 				"precision" : 3,
 				"step" : 0.001,
 				"text" : "Velocity Diffusion",
@@ -365,7 +372,7 @@
 				"fraction" : false,
 				"max" : 50,
 				"min" : 0,
-				"order" : 125,
+				"order" : 126,
 				"text" : "Vorticity",
 				"type" : "slider",
 				"value" : 30

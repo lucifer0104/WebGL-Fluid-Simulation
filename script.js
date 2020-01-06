@@ -44,7 +44,8 @@ let config = {
     IDLE_SPLATS: false,
     RANDOM_AMOUNT: 10,
     RANDOM_INTERVAL: 1,
-    SPLAT_ON_CLICK: true
+    SPLAT_ON_CLICK: true,
+    SHOW_MOUSE_MOVEMENT: true
 };
 
 document.addEventListener("DOMContentLoaded", () => {   
@@ -132,6 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
             if (properties.splat_on_click) config.SPLAT_ON_CLICK = properties.splat_on_click.value;
+            if (properties.show_mouse_movement) config.SHOW_MOUSE_MOVEMENT = properties.show_mouse_movement.value;
         }
     };
 
@@ -1330,6 +1332,7 @@ function resizeCanvas () {
 }
 
 canvas.addEventListener('mousemove', e => {
+    if (!config.SHOW_MOUSE_MOVEMENT) return;
     pointers[0].moved = pointers[0].down;
     pointers[0].dx = (e.offsetX - pointers[0].x) * 5.0;
     pointers[0].dy = (e.offsetY - pointers[0].y) * 5.0;
