@@ -179,7 +179,7 @@ function pointerPrototype () {
     this.dy = 0;
     this.down = false;
     this.moved = false;
-    this.color = [30, 0, 300];
+    this.color = config.COLORFUL ? generateColor() : config.POINTER_COLOR.getRandom();
 }
 
 let pointers = [];
