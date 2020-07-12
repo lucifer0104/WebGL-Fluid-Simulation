@@ -72,7 +72,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 config.DYE_RESOLUTION = properties.dye_resolution.value;
                 initFramebuffers();
             }
-            if (properties.splat_color) splatColors[0] = rgbToPointerColor(properties.splat_color.value);
+            if (properties.splat_color) {
+                splatColors[0] = rgbToPointerColor(properties.splat_color.value);
+                if (!config.COLORFUL) config.POINTER_COLOR = [splatColors[0]];
+            }
             if (properties.splat_color_2) splatColors[1] = rgbToPointerColor(properties.splat_color_2.value);
             if (properties.splat_color_3) splatColors[2] = rgbToPointerColor(properties.splat_color_3.value);
             if (properties.splat_color_4) splatColors[3] = rgbToPointerColor(properties.splat_color_4.value);
@@ -171,15 +174,17 @@ function indexOfMax(arr) {
     return maxIndex;
 }
 
-function pointerPrototype () {
-    this.id = -1;
-    this.x = 0;
-    this.y = 0;
-    this.dx = 0;
-    this.dy = 0;
-    this.down = false;
-    this.moved = false;
-    this.color = config.COLORFUL ? generateColor() : config.POINTER_COLOR.getRandom();
+class pointerPrototype {
+    constructor() {
+        this.id = -1;
+        this.x = 0;
+        this.y = 0;
+        this.dx = 0;
+        this.dy = 0;
+        this.down = false;
+        this.moved = false;
+        this.color = config.COLORFUL ? generateColor() : config.POINTER_COLOR.getRandom();
+    }
 }
 
 let pointers = [];

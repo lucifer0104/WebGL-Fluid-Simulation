@@ -383,7 +383,8 @@
 	"preview" : "preview.jpg",
 	"tags" : [ "Abstract" ],
 	"title" : "Colorful Fluid Animation [Audio Responsive]",
-	"type" : "web",
+	"type" : "Web",
+	"version" : 1,
 	"visibility" : "public",
 	"workshopid" : "1748506393"
 }
