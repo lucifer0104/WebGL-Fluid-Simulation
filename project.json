@@ -53,13 +53,13 @@
 			{
 				"fraction" : true,
 				"max" : 2,
-				"min" : 0.10000000000000001,
+				"min" : 0.1,
 				"order" : 131,
 				"precision" : 2,
 				"step" : 0.01,
 				"text" : "Bloom Intensity",
 				"type" : "slider",
-				"value" : 0.80000000000000004
+				"value" : 0.8
 			},
 			"bloom_threshold" : 
 			{
@@ -71,7 +71,7 @@
 				"step" : 0.01,
 				"text" : "Bloom Threshold",
 				"type" : "slider",
-				"value" : 0.59999999999999998
+				"value" : 0.6
 			},
 			"colorful" : 
 			{
@@ -84,13 +84,13 @@
 			{
 				"fraction" : true,
 				"max" : 1,
-				"min" : 0.90000000000000002,
+				"min" : 0.9,
 				"order" : 123,
 				"precision" : 3,
 				"step" : 0.001,
 				"text" : "Density Diffusion",
 				"type" : "slider",
-				"value" : 0.96999999999999997
+				"value" : 0.97
 			},
 			"dye_resolution" : 
 			{
@@ -143,6 +143,7 @@
 			},
 			"frequency_range" : 
 			{
+				"condition" : "audio_responsive.value",
 				"fraction" : false,
 				"max" : 62,
 				"min" : 1,
@@ -153,6 +154,7 @@
 			},
 			"frequency_range_start" : 
 			{
+				"condition" : "audio_responsive.value",
 				"fraction" : false,
 				"max" : 62,
 				"min" : 0,
@@ -193,7 +195,7 @@
 				"step" : 0.01,
 				"text" : "Pressure Diffusion",
 				"type" : "slider",
-				"value" : 0.80000000000000004
+				"value" : 0.8
 			},
 			"random_splat_amount" : 
 			{
@@ -212,11 +214,11 @@
 			{
 				"condition" : "idle_random_splats.value",
 				"fraction" : true,
-				"max" : 10,
+				"max" : 5,
 				"min" : 0,
 				"order" : 108,
 				"precision" : 2,
-				"step" : 0.10000000000000001,
+				"step" : 0.01,
 				"text" : "Random Splat Interval",
 				"type" : "slider",
 				"value" : 1
@@ -346,7 +348,7 @@
 				"step" : 0.01,
 				"text" : "Splat Radius",
 				"type" : "slider",
-				"value" : 0.29999999999999999
+				"value" : 3.0
 			},
 			"use_background_image" : 
 			{
@@ -359,13 +361,13 @@
 			{
 				"fraction" : true,
 				"max" : 1,
-				"min" : 0.90000000000000002,
+				"min" : 0.9,
 				"order" : 124,
 				"precision" : 3,
 				"step" : 0.001,
 				"text" : "Velocity Diffusion",
 				"type" : "slider",
-				"value" : 0.97999999999999998
+				"value" : 0.98
 			},
 			"vorticity" : 
 			{
@@ -383,8 +385,8 @@
 	"preview" : "preview.jpg",
 	"tags" : [ "Abstract" ],
 	"title" : "Colorful Fluid Animation [Audio Responsive]",
-	"type" : "Web",
-	"version" : 1,
+	"type" : "web",
+	"version" : 2,
 	"visibility" : "public",
 	"workshopid" : "1748506393"
 }
