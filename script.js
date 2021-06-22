@@ -37,7 +37,7 @@ let config = {
     BLOOM_THRESHOLD: 0.6,
     BLOOM_SOFT_KNEE: 0.7,
     POINTER_COLOR: [{ r: 0, g: 0.15, b: 0 }],
-    SOUND_SENSITIVITY: 0.25,
+    SOUND_SENSITIVITY: 0.12,
     AUDIO_RESPONSIVE: true,
     FREQ_RANGE: 8,
     FREQ_RANGE_START: 0,
